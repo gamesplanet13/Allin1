@@ -4,22 +4,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GitHub Repos Launcher — gamesplanet13</title>
+  <title>GitHub Pages Launcher — gamesplanet13</title>
   <style>
     :root{--bg:#0b0f14;--card:#0f1720;--accent:#6ee7b7;--text:#e6eef6}
     *{box-sizing:border-box;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
     body{margin:0;background:linear-gradient(180deg,#071018 0%,#061019 100%);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
     .app{width:100%;max-width:980px}
-    header{display:flex;gap:12px;align-items:center;margin-bottom:18px}
+    header{display:flex;gap:12px;align-items:center;margin-bottom:18px;flex-wrap:wrap}
     h1{font-size:18px;margin:0}
     p{margin:0;color:#9fb1c3;font-size:13px}
-    .controls{margin-left:auto;display:flex;gap:8px}
+    .controls{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
     input[type=search]{padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);min-width:200px}
     button{background:var(--card);border:1px solid rgba(255,255,255,0.04);color:var(--text);padding:8px 12px;border-radius:10px;cursor:pointer}
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
     .repo{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);display:flex;align-items:center;gap:10px}
     .repo button{flex:1;text-align:left;background:transparent;border:none;padding:0;font-weight:600;color:var(--text);font-size:14px}
-    .repo small{display:block;color:#88a6bf;font-size:12px}
+    .repo small{display:block;color:#88a6bf;font-size:12px;overflow:hidden;text-overflow:ellipsis}
     .actions{display:flex;gap:8px}
     .muted{color:#6f93a9;font-size:13px}
     footer{margin-top:16px;color:#6f93a9;font-size:13px}
@@ -30,11 +30,11 @@
   <div class="app">
     <header>
       <div>
-        <h1>GitHub Quick Launcher — gamesplanet13</h1>
-        <p class="muted">Tap any tile to open the repository page in a new tab.</p>
+        <h1>GitHub Pages Launcher — gamesplanet13</h1>
+        <p class="muted">Tap any tile to open the GitHub Pages site in a new tab.</p>
       </div>
       <div class="controls">
-        <input id="search" type="search" placeholder="Search repo..." />
+        <input id="search" type="search" placeholder="Search page..." />
         <button id="openAll">Open all</button>
         <button id="copyList">Copy links</button>
       </div>
@@ -43,17 +43,17 @@
 </main>
 
 <footer>
-  <div>Created for your GitHub list. If username is different replace <code>gamesplanet13</code> in links.</div>
+  <div>All links point to <code>https://gamesplanet13.github.io/&lt;repo&gt;/</code></div>
 </footer>
 
   </div>  <script>
-    // List of repo slugs (extracted from your screenshot / messages)
+    // List of repo slugs (from your screenshot)
     const repos = [
       'order','ps2fmcb','Ordernow','dukaanorder','Renewedconsole','PS2FMCBUSB','dukaan','Abandoned-','delhiveryordermaker','registerw','ps2gameselector','thanks','Morder','msgtoorder','PCGAMESELECTOR','sell','Deliveryinfo','dukaanthanks','Sub','PreOrder','invoice','pay','Imageconverter','offer','ocrdtdc','ps2now','dukaanor','pickup','sellps','gamelist','labelmaker','combiner','pay2','bgtool','lablecombiner','Paytool','Test','Cod','ps2','AMAZONPRICE','ps3hen','gamesplanet13','Cover'
     ];
 
-    const username = 'gamesplanet13'; // change if needed
-    const base = (slug)=> `https://github.com/${username}/${slug}`;
+    const username = 'gamesplanet13';
+    const base = (slug)=> `https://${username}.github.io/${slug}/`;
 
     const grid = document.getElementById('grid');
     const search = document.getElementById('search');
@@ -105,17 +105,15 @@
     });
 
     openAllBtn.addEventListener('click', ()=>{
-      // Open all in new tabs (browser may block many); use with care
       repos.forEach(r=> window.open(base(r),'_blank'));
     });
 
     copyListBtn.addEventListener('click', async ()=>{
       const list = repos.map(r=> base(r)).join('\n');
-      try{ await navigator.clipboard.writeText(list); alert('Repo links copied to clipboard'); }
+      try{ await navigator.clipboard.writeText(list); alert('Page links copied to clipboard'); }
       catch(e){ prompt('Copy these links manually', list); }
     });
 
-    // Small keyboard help: Enter on search opens first match
     search.addEventListener('keydown',(e)=>{
       if(e.key === 'Enter'){
         const match = repos.find(r=> r.toLowerCase().includes(search.value.toLowerCase().trim()));
